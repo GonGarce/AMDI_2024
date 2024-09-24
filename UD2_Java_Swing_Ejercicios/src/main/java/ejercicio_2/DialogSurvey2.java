@@ -2,20 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package io.gongarce.ud2_java_swing_ejercicios.ejercicio_2;
+package ejercicio_2;
+
+import com.formdev.flatlaf.FlatDarkLaf;
 
 /**
  *
  * @author gag
  */
-public class DialogSurvey extends javax.swing.JDialog {
+public class DialogSurvey2 extends javax.swing.JDialog {
 
     /**
      * Creates new form DialogSurvey
      */
-    public DialogSurvey(java.awt.Frame parent, boolean modal) {
+    public DialogSurvey2(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        FlatDarkLaf.setup();
         initComponents();
+        panelSportList.setVisible(false);
     }
 
     /**
@@ -39,10 +43,10 @@ public class DialogSurvey extends javax.swing.JDialog {
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        cboxSports = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        panelSportList = new javax.swing.JScrollPane();
+        listSports = new javax.swing.JList<>();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -107,16 +111,21 @@ public class DialogSurvey extends javax.swing.JDialog {
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Menor de 18", "Entre 18 y 30 años", "Entre 30 y 65 años", "Mayor de 65" }));
 
-        jCheckBox1.setText("¿Practica algún deporte?");
+        cboxSports.setText("¿Practica algún deporte?");
+        cboxSports.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxSportsActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("¿Cuál?");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        listSports.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Fútbol", "Tenis", "Tenis de Mesa", "Baloncesto", "Patinaje", "Surf" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        panelSportList.setViewportView(listSports);
 
         jLabel6.setText("Marque de 1 a 10 su grado de afición a:");
 
@@ -164,11 +173,11 @@ public class DialogSurvey extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
+                        .addComponent(cboxSports)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panelSportList, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,9 +234,9 @@ public class DialogSurvey extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jCheckBox1)
+                        .addComponent(cboxSports)
                         .addComponent(jLabel5))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelSportList, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -252,6 +261,10 @@ public class DialogSurvey extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cboxSportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxSportsActionPerformed
+        panelSportList.setVisible(cboxSports.isSelected());
+    }//GEN-LAST:event_cboxSportsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -269,20 +282,21 @@ public class DialogSurvey extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogSurvey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogSurvey2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogSurvey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogSurvey2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogSurvey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogSurvey2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogSurvey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogSurvey2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogSurvey dialog = new DialogSurvey(new javax.swing.JFrame(), true);
+                DialogSurvey2 dialog = new DialogSurvey2(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -296,9 +310,9 @@ public class DialogSurvey extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox cboxSports;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -309,17 +323,17 @@ public class DialogSurvey extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JSlider jSlider2;
     private javax.swing.JSlider jSlider3;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JList<String> listSports;
+    private javax.swing.JScrollPane panelSportList;
     // End of variables declaration//GEN-END:variables
 }
