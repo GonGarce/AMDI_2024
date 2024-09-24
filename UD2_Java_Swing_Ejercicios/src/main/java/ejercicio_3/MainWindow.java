@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package ejercicio_1;
+package ejercicio_3;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import javax.swing.JPanel;
+import ejercicio_2.DialogSurvey2;
+import ejercicio_4.DialogSurvey4;
+import javax.swing.JDialog;
 
 /**
  *
@@ -19,8 +21,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         FlatDarkLaf.setup();
         initComponents();
-        
-        jTabbedPane1.addTab("Tab por código", new JPanel());
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -32,46 +33,58 @@ public class MainWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        menuItemSurvey = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
+        jMenu1.setText("File");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(159, 159, 159)
-                .addComponent(jButton1)
-                .addContainerGap(166, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(jButton1)
-                .addContainerGap(125, Short.MAX_VALUE))
-        );
+        jMenuItem1.setText("Open...");
+        jMenu1.add(jMenuItem1);
 
-        jTabbedPane1.addTab("tab1", jPanel1);
+        jMenuItem2.setText("Close");
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("User");
+
+        menuItemSurvey.setText("Survey");
+        menuItemSurvey.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemSurveyActionPerformed(evt);
+            }
+        });
+        jMenu2.add(menuItemSurvey);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGap(0, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGap(0, 277, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void menuItemSurveyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSurveyActionPerformed
+        JDialog surveyDialog = new DialogSurvey4(this, true);
+        surveyDialog.setLocationRelativeTo(this);
+        surveyDialog.setVisible(true);
+    }//GEN-LAST:event_menuItemSurveyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -109,8 +122,11 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem menuItemSurvey;
     // End of variables declaration//GEN-END:variables
 }
