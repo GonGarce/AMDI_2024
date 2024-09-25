@@ -5,6 +5,8 @@
 package ejercicio_4;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import java.awt.event.ActionListener;
+import java.beans.EventHandler;
 
 /**
  *
@@ -22,7 +24,11 @@ public class DialogSurvey4 extends javax.swing.JDialog {
         //comboListSport.setVisible(false);
         panelSports.remove(comboListSport);
         txtProfession.requestFocus();
+        
+        btnCancel.addActionListener(EventHandler.create(ActionListener.class, this, "dispose"));
     }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -265,11 +271,6 @@ public class DialogSurvey4 extends javax.swing.JDialog {
         jPanel7.add(jButton1);
 
         btnCancel.setText("Cancelar");
-        btnCancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelActionPerformed(evt);
-            }
-        });
         jPanel7.add(btnCancel);
 
         panelContainer.add(jPanel7);
@@ -288,10 +289,6 @@ public class DialogSurvey4 extends javax.swing.JDialog {
         }
         panelSports.revalidate();
     }//GEN-LAST:event_chkBoxSportActionPerformed
-
-    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments

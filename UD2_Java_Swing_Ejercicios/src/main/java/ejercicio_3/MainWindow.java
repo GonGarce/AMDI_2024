@@ -5,7 +5,6 @@
 package ejercicio_3;
 
 import com.formdev.flatlaf.FlatDarkLaf;
-import ejercicio_2.DialogSurvey2;
 import ejercicio_4.DialogSurvey4;
 import javax.swing.JDialog;
 

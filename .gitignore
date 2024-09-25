@@ -10,3 +10,4 @@ nbdist/
 
 # drive
 .tmp.driveupload/**
+.tmp.drivedownload/**
