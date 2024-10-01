@@ -35,14 +35,14 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
+        panelDetails = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         txtEdad = new javax.swing.JTextField();
         jSpinner1 = new javax.swing.JSpinner();
-        jPanel3 = new javax.swing.JPanel();
+        panelGender = new javax.swing.JPanel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -50,7 +50,7 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
         cboxSport = new javax.swing.JCheckBox();
         panelSportList = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
-        jPanel5 = new javax.swing.JPanel();
+        panelHobbies = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -58,11 +58,12 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
         jSlider1 = new javax.swing.JSlider();
         jSlider2 = new javax.swing.JSlider();
         jSlider3 = new javax.swing.JSlider();
-        jPanel6 = new javax.swing.JPanel();
+        panelActions = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Personal Survey");
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -72,61 +73,61 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
         jPanel2Layout.columnWidths = new int[] {80, 40, 20, 40, 80};
         jPanel2Layout.rowHeights = new int[] {30, 10, 30};
         jPanel2Layout.columnWeights = new double[] {0.2, 0.5, 0.1, 0.1, 0.5};
-        jPanel2.setLayout(jPanel2Layout);
+        panelDetails.setLayout(jPanel2Layout);
 
         jLabel1.setText("Profesión");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel2.add(jLabel1, gridBagConstraints);
+        panelDetails.add(jLabel1, gridBagConstraints);
 
         jLabel2.setText("Nº Hermanos");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel2.add(jLabel2, gridBagConstraints);
+        panelDetails.add(jLabel2, gridBagConstraints);
 
         jLabel3.setText("Edad");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel2.add(jLabel3, gridBagConstraints);
+        panelDetails.add(jLabel3, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel2.add(jTextField1, gridBagConstraints);
+        panelDetails.add(jTextField1, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel2.add(txtEdad, gridBagConstraints);
+        panelDetails.add(txtEdad, gridBagConstraints);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel2.add(jSpinner1, gridBagConstraints);
+        panelDetails.add(jSpinner1, gridBagConstraints);
 
-        jPanel1.add(jPanel2);
+        jPanel1.add(panelDetails);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Sexo"));
-        jPanel3.setLayout(new java.awt.GridLayout(1, 3));
+        panelGender.setBorder(javax.swing.BorderFactory.createTitledBorder("Sexo"));
+        panelGender.setLayout(new java.awt.GridLayout(1, 3));
 
         jRadioButton1.setText("jRadioButton1");
         jRadioButton1.setMargin(new java.awt.Insets(20, 20, 20, 20));
-        jPanel3.add(jRadioButton1);
+        panelGender.add(jRadioButton1);
 
         jRadioButton2.setText("jRadioButton2");
         jRadioButton2.setMargin(new java.awt.Insets(20, 20, 20, 20));
-        jPanel3.add(jRadioButton2);
+        panelGender.add(jRadioButton2);
 
         jRadioButton3.setText("jRadioButton3");
         jRadioButton3.setMargin(new java.awt.Insets(20, 20, 20, 20));
-        jPanel3.add(jRadioButton3);
+        panelGender.add(jRadioButton3);
 
-        jPanel1.add(jPanel3);
+        jPanel1.add(panelGender);
 
         panelSports.setBorder(javax.swing.BorderFactory.createTitledBorder("Deportes"));
         panelSports.setLayout(new java.awt.BorderLayout());
@@ -152,10 +153,10 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
 
         jPanel1.add(panelSports);
 
-        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Aficiones"));
+        panelHobbies.setBorder(javax.swing.BorderFactory.createTitledBorder("Aficiones"));
         java.awt.GridBagLayout jPanel5Layout = new java.awt.GridBagLayout();
         jPanel5Layout.columnWeights = new double[] {0.3, 0.7};
-        jPanel5.setLayout(jPanel5Layout);
+        panelHobbies.setLayout(jPanel5Layout);
 
         jLabel4.setText("Elija su nivel de afición en las siguientes categorías");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -163,28 +164,28 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel5.add(jLabel4, gridBagConstraints);
+        panelHobbies.add(jLabel4, gridBagConstraints);
 
         jLabel5.setText("Compras");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel5.add(jLabel5, gridBagConstraints);
+        panelHobbies.add(jLabel5, gridBagConstraints);
 
         jLabel6.setText("Televisión");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel5.add(jLabel6, gridBagConstraints);
+        panelHobbies.add(jLabel6, gridBagConstraints);
 
         jLabel7.setText("Lectura");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel5.add(jLabel7, gridBagConstraints);
+        panelHobbies.add(jLabel7, gridBagConstraints);
 
         jSlider1.setMajorTickSpacing(1);
         jSlider1.setMaximum(10);
@@ -195,7 +196,7 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel5.add(jSlider1, gridBagConstraints);
+        panelHobbies.add(jSlider1, gridBagConstraints);
 
         jSlider2.setMajorTickSpacing(1);
         jSlider2.setMaximum(10);
@@ -206,7 +207,7 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel5.add(jSlider2, gridBagConstraints);
+        panelHobbies.add(jSlider2, gridBagConstraints);
 
         jSlider3.setMajorTickSpacing(1);
         jSlider3.setMaximum(10);
@@ -217,14 +218,14 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 3;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        jPanel5.add(jSlider3, gridBagConstraints);
+        panelHobbies.add(jSlider3, gridBagConstraints);
 
-        jPanel1.add(jPanel5);
+        jPanel1.add(panelHobbies);
 
-        jPanel6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+        panelActions.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
         jButton1.setText("Guardar");
-        jPanel6.add(jButton1);
+        panelActions.add(jButton1);
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -232,9 +233,9 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel6.add(jButton2);
+        panelActions.add(jButton2);
 
-        jPanel1.add(jPanel6);
+        jPanel1.add(panelActions);
 
         getContentPane().add(jPanel1);
 
@@ -312,10 +313,6 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JRadioButton jRadioButton3;
@@ -324,6 +321,10 @@ public class SurveyFromClassroom extends javax.swing.JDialog {
     private javax.swing.JSlider jSlider3;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JPanel panelActions;
+    private javax.swing.JPanel panelDetails;
+    private javax.swing.JPanel panelGender;
+    private javax.swing.JPanel panelHobbies;
     private javax.swing.JScrollPane panelSportList;
     private javax.swing.JPanel panelSports;
     private javax.swing.JTextField txtEdad;
