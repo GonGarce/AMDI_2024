@@ -4,6 +4,8 @@
  */
 package master_detail;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Persistence;
 import jakarta.persistence.Query;
 import jakarta.persistence.RollbackException;
 import java.beans.Beans;
@@ -12,6 +14,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,8 +22,8 @@ import java.util.List;
  */
 public class MasterDetailForm extends javax.swing.JFrame {
 
-    private jakarta.persistence.EntityManager entityManager;
-    private java.util.List<Contactos_1> list;
+    private EntityManager entityManager;
+    private List<Contactos> list;
     private Query query;
 
     /**
@@ -32,7 +35,6 @@ public class MasterDetailForm extends javax.swing.JFrame {
             return;
         }
         // Set listeners
-        entityManager.getTransaction().begin();
         btnDeleteDetail.addActionListener(((e) -> onClickDeleteDetail(e)));
         btnDeleteMaster.addActionListener(((e) -> onClickeDeleteMaster(e)));
         btnNewDetail.addActionListener(((e) -> onClickNewDetail(e)));
@@ -41,13 +43,24 @@ public class MasterDetailForm extends javax.swing.JFrame {
         btnSave.addActionListener(((e) -> onClickSave(e)));
 
         // Init entities
-        query = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT C FROM Contactos_1 C");
+        entityManager = Persistence.createEntityManagerFactory("io.gongarce.agenda").createEntityManager();
+        query = entityManager.createQuery("SELECT C FROM Contactos C");
         list = query.getResultList();
+        entityManager.getTransaction().begin();
+
+        List<ListTableModel.TableColum<Contactos, ?>> columns = new ArrayList<>(3);
+        columns.add(new ListTableModel.TableColum<>("Id", Integer.class, Contactos::getId, Contactos::setId, false));
+        columns.add(new ListTableModel.TableColum<>("Nombre", String.class, Contactos::getNombre, Contactos::setNombre));
+        columns.add(new ListTableModel.TableColum<>("Ciudad", String.class, Contactos::getCiudad, Contactos::setCiudad));
+        
+        ListTableModel<Contactos> masterModel = new ListTableModel<>(columns, list);
+
+        tableMaster.setModel(masterModel);
     }
 
     private void onClickDeleteDetail(java.awt.event.ActionEvent evt) {
         int index = tableMaster.getSelectedRow();
-        Contactos_1 C = list.get(tableMaster.convertRowIndexToModel(index));
+        Contactos C = list.get(tableMaster.convertRowIndexToModel(index));
         Collection<Correos> cs = C.getCorreosList();
         int[] selected = tableDetail.getSelectedRows();
         List<Correos> toRemove = new ArrayList<Correos>(selected.length);
@@ -69,7 +82,7 @@ public class MasterDetailForm extends javax.swing.JFrame {
 
     private void onClickNewDetail(java.awt.event.ActionEvent evt) {
         int index = tableMaster.getSelectedRow();
-        Contactos_1 C = list.get(tableMaster.convertRowIndexToModel(index));
+        Contactos C = list.get(tableMaster.convertRowIndexToModel(index));
         Collection<Correos> cs = C.getCorreosList();
         if (cs == null) {
             cs = new LinkedList<Correos>();
@@ -100,9 +113,9 @@ public class MasterDetailForm extends javax.swing.JFrame {
 
     private void onClickeDeleteMaster(java.awt.event.ActionEvent evt) {
         int[] selected = tableMaster.getSelectedRows();
-        List<Contactos_1> toRemove = new ArrayList<Contactos_1>(selected.length);
+        List<Contactos> toRemove = new ArrayList<Contactos>(selected.length);
         for (int idx = 0; idx < selected.length; idx++) {
-            Contactos_1 C = list.get(tableMaster.convertRowIndexToModel(selected[idx]));
+            Contactos C = list.get(tableMaster.convertRowIndexToModel(selected[idx]));
             toRemove.add(C);
             entityManager.remove(C);
         }
@@ -110,7 +123,7 @@ public class MasterDetailForm extends javax.swing.JFrame {
     }
 
     private void onClickNewMaster(java.awt.event.ActionEvent evt) {
-        Contactos_1 C = new Contactos_1();
+        Contactos C = new Contactos();
         entityManager.persist(C);
         list.add(C);
         int row = list.size() - 1;
@@ -125,8 +138,8 @@ public class MasterDetailForm extends javax.swing.JFrame {
         } catch (RollbackException rex) {
             rex.printStackTrace();
             entityManager.getTransaction().begin();
-            List<Contactos_1> merged = new ArrayList<Contactos_1>(list.size());
-            for (Contactos_1 C : list) {
+            List<Contactos> merged = new ArrayList<Contactos>(list.size());
+            for (Contactos C : list) {
                 merged.add(entityManager.merge(C));
             }
             list.clear();

@@ -26,11 +26,11 @@ import jakarta.persistence.Transient;
  * @author Agustin
  */
 @Entity
-@Table(name = "contactos", catalog = "agenda", schema = "")
+@Table(name = "contactos", catalog = "AMDI_24", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "Contactos_1.findAll", query = "SELECT c FROM Contactos_1 c")
-    , @NamedQuery(name = "Contactos_1.findById", query = "SELECT c FROM Contactos_1 c WHERE c.id = :id")})
-public class Contactos_1 implements Serializable {
+    @NamedQuery(name = "Contactos.findAll", query = "SELECT c FROM Contactos c")
+    , @NamedQuery(name = "Contactos.findById", query = "SELECT c FROM Contactos c WHERE c.id = :id")})
+public class Contactos implements Serializable {
 
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
@@ -51,14 +51,14 @@ public class Contactos_1 implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContacto")
     private List<Correos> correosList;
 
-    public Contactos_1() {
+    public Contactos() {
     }
 
-    public Contactos_1(Integer id) {
+    public Contactos(Integer id) {
         this.id = id;
     }
 
-    public Contactos_1(Integer id, String nombre, String ciudad) {
+    public Contactos(Integer id, String nombre, String ciudad) {
         this.id = id;
         this.nombre = nombre;
         this.ciudad = ciudad;
@@ -112,10 +112,10 @@ public class Contactos_1 implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Contactos_1)) {
+        if (!(object instanceof Contactos)) {
             return false;
         }
-        Contactos_1 other = (Contactos_1) object;
+        Contactos other = (Contactos) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -124,7 +124,7 @@ public class Contactos_1 implements Serializable {
 
     @Override
     public String toString() {
-        return "sources.Contactos_1[ id=" + id + " ]";
+        return "sources.Contactos[ id=" + id + " ]";
     }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {

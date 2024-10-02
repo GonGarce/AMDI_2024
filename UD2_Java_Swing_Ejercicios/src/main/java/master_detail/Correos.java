@@ -24,7 +24,7 @@ import jakarta.persistence.Transient;
  * @author Agustin
  */
 @Entity
-@Table(name = "correos", catalog = "agenda", schema = "")
+@Table(name = "correos", catalog = "AMDI_24", schema = "")
 @NamedQueries({
     @NamedQuery(name = "Correos.findAll", query = "SELECT c FROM Correos c")
     , @NamedQuery(name = "Correos.findByCorreoId", query = "SELECT c FROM Correos c WHERE c.correoId = :correoId")
@@ -44,7 +44,7 @@ public class Correos implements Serializable {
     private String correo;
     @JoinColumn(name = "ID_CONTACTO", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private Contactos_1 idContacto;
+    private Contactos idContacto;
 
     public Correos() {
     }
@@ -78,12 +78,12 @@ public class Correos implements Serializable {
         changeSupport.firePropertyChange("correo", oldCorreo, correo);
     }
 
-    public Contactos_1 getIdContacto() {
+    public Contactos getIdContacto() {
         return idContacto;
     }
 
-    public void setIdContacto(Contactos_1 idContacto) {
-        Contactos_1 oldIdContacto = this.idContacto;
+    public void setIdContacto(Contactos idContacto) {
+        Contactos oldIdContacto = this.idContacto;
         this.idContacto = idContacto;
         changeSupport.firePropertyChange("idContacto", oldIdContacto, idContacto);
     }
