@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,6 +24,8 @@ public class MasterDetailForm extends javax.swing.JFrame {
     private EntityManager entityManager;
     private List<Contactos> list;
     private Query query;
+    private ListTableModel<Contactos> modelMaster;
+    private ListTableModel<Correos> modelDetail;
 
     /**
      * Creates new form MasterDetail
@@ -41,6 +42,11 @@ public class MasterDetailForm extends javax.swing.JFrame {
         btnNewMaster.addActionListener(((e) -> onClickNewMaster(e)));
         btnRefresh.addActionListener(((e) -> onClickRefresh(e)));
         btnSave.addActionListener(((e) -> onClickSave(e)));
+        
+        // Needed to not break table when deleting or refreshing while editing a cell
+        // Other option is to call "table.getCellEditor().stopCellEditing()"
+        tableMaster.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
+        tableDetail.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
 
         // Init entities
         entityManager = Persistence.createEntityManagerFactory("io.gongarce.agenda").createEntityManager();
@@ -48,14 +54,21 @@ public class MasterDetailForm extends javax.swing.JFrame {
         list = query.getResultList();
         entityManager.getTransaction().begin();
 
+        // Configure Master Table
         List<ListTableModel.TableColum<Contactos, ?>> columns = new ArrayList<>(3);
         columns.add(new ListTableModel.TableColum<>("Id", Integer.class, Contactos::getId, Contactos::setId, false));
         columns.add(new ListTableModel.TableColum<>("Nombre", String.class, Contactos::getNombre, Contactos::setNombre));
         columns.add(new ListTableModel.TableColum<>("Ciudad", String.class, Contactos::getCiudad, Contactos::setCiudad));
-        
-        ListTableModel<Contactos> masterModel = new ListTableModel<>(columns, list);
+        modelMaster = new ListTableModel<>(columns, list);
+        tableMaster.setModel(modelMaster);
 
-        tableMaster.setModel(masterModel);
+        // Configure Detail Table
+        List<ListTableModel.TableColum<Correos, ?>> detailCols = new ArrayList<>(2);
+        detailCols.add(new ListTableModel.TableColum<>("Id", Integer.class, Correos::getCorreoId, Correos::setCorreoId, false));
+        detailCols.add(new ListTableModel.TableColum<>("Correo", String.class, Correos::getCorreo, Correos::setCorreo));
+        modelDetail = new ListTableModel<>(detailCols);
+        tableDetail.setModel(modelDetail);
+
     }
 
     private void onClickDeleteDetail(java.awt.event.ActionEvent evt) {
@@ -103,32 +116,31 @@ public class MasterDetailForm extends javax.swing.JFrame {
     private void onClickRefresh(java.awt.event.ActionEvent evt) {
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        java.util.Collection data = query.getResultList();
+        List<Contactos> data = query.getResultList();
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
-        list.clear();
-        list.addAll(data);
+        modelMaster.setData(data);
     }
 
     private void onClickeDeleteMaster(java.awt.event.ActionEvent evt) {
         int[] selected = tableMaster.getSelectedRows();
-        List<Contactos> toRemove = new ArrayList<Contactos>(selected.length);
-        for (int idx = 0; idx < selected.length; idx++) {
-            Contactos C = list.get(tableMaster.convertRowIndexToModel(selected[idx]));
+        List<Contactos> toRemove = new ArrayList<>(selected.length);
+        for (int i = 0; i < selected.length; i++) {
+            Contactos C = modelMaster.getRowValue(tableMaster.convertRowIndexToModel(selected[i]));
             toRemove.add(C);
             entityManager.remove(C);
         }
-        list.removeAll(toRemove);
+        modelMaster.remove(toRemove);
     }
 
     private void onClickNewMaster(java.awt.event.ActionEvent evt) {
-        Contactos C = new Contactos();
-        entityManager.persist(C);
-        list.add(C);
-        int row = list.size() - 1;
+        Contactos contact = new Contactos();
+        entityManager.persist(contact);
+        int row = modelMaster.add(contact);
         tableMaster.setRowSelectionInterval(row, row);
         tableMaster.scrollRectToVisible(tableMaster.getCellRect(row, 0, true));
+        tableMaster.editCellAt(row, 1);
     }
 
     private void onClickSave(java.awt.event.ActionEvent evt) {

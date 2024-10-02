@@ -13,6 +13,8 @@ import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.NamedQueries;
@@ -28,26 +30,31 @@ import jakarta.persistence.Transient;
 @Entity
 @Table(name = "contactos", catalog = "AMDI_24", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "Contactos.findAll", query = "SELECT c FROM Contactos c")
-    , @NamedQuery(name = "Contactos.findById", query = "SELECT c FROM Contactos c WHERE c.id = :id")})
+    @NamedQuery(name = "Contactos.findAll", query = "SELECT c FROM Contactos c"),
+    @NamedQuery(name = "Contactos.findById", query = "SELECT c FROM Contactos c WHERE c.id = :id")})
 public class Contactos implements Serializable {
 
     @Transient
     private PropertyChangeSupport changeSupport = new PropertyChangeSupport(this);
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
+
     @Basic(optional = false)
     @Lob
     @Column(name = "Nombre")
-    private String nombre;
+    private String nombre = "";
+
     @Basic(optional = false)
     @Lob
     @Column(name = "Ciudad")
-    private String ciudad;
+    private String ciudad = "";
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContacto")
     private List<Correos> correosList;
 
@@ -134,5 +141,5 @@ public class Contactos implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    
+
 }

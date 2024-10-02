@@ -5,12 +5,13 @@
 package master_detail;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.OptionalInt;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.IntStream;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -19,7 +20,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ListTableModel<T> extends AbstractTableModel {
 
-    private List<T> data;
+    public List<T> data;
     private List<TableColum<T, ?>> columns;
 
     public ListTableModel() {
@@ -39,6 +40,28 @@ public class ListTableModel<T> extends AbstractTableModel {
 
     public void setData(List<T> data) {
         this.data = data;
+        this.fireTableDataChanged();
+    }
+
+    public T getRowValue(int rowIndex) {
+        return this.data.get(rowIndex);
+    }
+    
+    public int add(T value) {
+        this.data.add(value);
+        int rowIndex = this.data.size() - 1;
+        this.fireTableRowsInserted(rowIndex, rowIndex);
+        return rowIndex;
+    }
+
+    public void remove(int index) {
+        data.remove(index);
+        this.fireTableRowsDeleted(index, index);
+    }
+
+    public void remove(Collection<T> toRemove) {
+        data.removeAll(toRemove);
+        this.fireTableChanged(new TableModelEvent(this));
     }
 
     @Override
