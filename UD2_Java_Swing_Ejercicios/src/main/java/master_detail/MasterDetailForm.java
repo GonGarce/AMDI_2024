@@ -10,16 +10,15 @@ import jakarta.persistence.Query;
 import jakarta.persistence.RollbackException;
 import java.beans.Beans;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
  * @author gag
  */
-public class MasterDetailForm extends javax.swing.JFrame {
+public class MasterDetailForm extends javax.swing.JFrame implements ListSelectionListener {
 
     private EntityManager entityManager;
     private List<Contactos> list;
@@ -42,7 +41,7 @@ public class MasterDetailForm extends javax.swing.JFrame {
         btnNewMaster.addActionListener(((e) -> onClickNewMaster(e)));
         btnRefresh.addActionListener(((e) -> onClickRefresh(e)));
         btnSave.addActionListener(((e) -> onClickSave(e)));
-        
+
         // Needed to not break table when deleting or refreshing while editing a cell
         // Other option is to call "table.getCellEditor().stopCellEditing()"
         tableMaster.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE);
@@ -69,47 +68,21 @@ public class MasterDetailForm extends javax.swing.JFrame {
         modelDetail = new ListTableModel<>(detailCols);
         tableDetail.setModel(modelDetail);
 
+        // Table listeners
+        tableMaster.getSelectionModel().addListSelectionListener(this);
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
+        // TODO: Master Selection Listener -> Show Detail
     }
 
     private void onClickDeleteDetail(java.awt.event.ActionEvent evt) {
-        int index = tableMaster.getSelectedRow();
-        Contactos C = list.get(tableMaster.convertRowIndexToModel(index));
-        Collection<Correos> cs = C.getCorreosList();
-        int[] selected = tableDetail.getSelectedRows();
-        List<Correos> toRemove = new ArrayList<Correos>(selected.length);
-        for (int idx = 0; idx < selected.length; idx++) {
-            selected[idx] = tableDetail.convertRowIndexToModel(selected[idx]);
-            int count = 0;
-            Iterator<Correos> iter = cs.iterator();
-            while (count++ < selected[idx]) {
-                iter.next();
-            }
-            Correos c = iter.next();
-            toRemove.add(c);
-            entityManager.remove(c);
-        }
-        cs.removeAll(toRemove);
-        tableMaster.clearSelection();
-        tableMaster.setRowSelectionInterval(index, index);
+        // TODO: Delete Detail Row
     }
 
     private void onClickNewDetail(java.awt.event.ActionEvent evt) {
-        int index = tableMaster.getSelectedRow();
-        Contactos C = list.get(tableMaster.convertRowIndexToModel(index));
-        Collection<Correos> cs = C.getCorreosList();
-        if (cs == null) {
-            cs = new LinkedList<Correos>();
-            C.setCorreosList((List) cs);
-        }
-        Correos c = new Correos();
-        entityManager.persist(c);
-        c.setIdContacto(C);
-        cs.add(c);
-        tableMaster.clearSelection();
-        tableMaster.setRowSelectionInterval(index, index);
-        int row = cs.size() - 1;
-        tableDetail.setRowSelectionInterval(row, row);
-        tableDetail.scrollRectToVisible(tableDetail.getCellRect(row, 0, true));
+        // TODO: Create Detail Row
     }
 
     @SuppressWarnings("unchecked")
@@ -282,4 +255,5 @@ public class MasterDetailForm extends javax.swing.JFrame {
     private javax.swing.JTable tableDetail;
     private javax.swing.JTable tableMaster;
     // End of variables declaration//GEN-END:variables
+
 }
