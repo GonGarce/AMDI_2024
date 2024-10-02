@@ -79,7 +79,18 @@ public class MasterDetailForm extends javax.swing.JFrame implements ListSelectio
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        // TODO: Master Selection Listener -> Show Detail
+        if (tableMaster.getSelectedRowCount() != 1) {
+            modelDetail.setData(Collections.emptyList());
+        } else {
+            Contactos c = modelMaster.getRowValue(tableMaster.convertRowIndexToModel(tableMaster.getSelectedRow()));
+            if (Objects.nonNull(c) && !c.equals(lastSelected)) {
+                lastSelected = c;
+                Query lastDetailQuery = entityManager.createNamedQuery("Correos.findByContact");
+                lastDetailQuery.setParameter("contacto", c);
+                lastDetailData = lastDetailQuery.getResultList();
+            }
+            modelDetail.setData(lastDetailData);
+        }
     }
 
     private void onClickDeleteDetail(java.awt.event.ActionEvent evt) {
