@@ -55,7 +55,7 @@ public class Contactos implements Serializable {
     @Column(name = "Ciudad")
     private String ciudad = "";
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idContacto")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contacto")
     private List<Correos> correosList;
 
     public Contactos() {

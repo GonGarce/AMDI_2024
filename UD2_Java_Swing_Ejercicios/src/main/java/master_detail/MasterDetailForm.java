@@ -10,7 +10,9 @@ import jakarta.persistence.Query;
 import jakarta.persistence.RollbackException;
 import java.beans.Beans;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -21,10 +23,13 @@ import javax.swing.event.ListSelectionListener;
 public class MasterDetailForm extends javax.swing.JFrame implements ListSelectionListener {
 
     private EntityManager entityManager;
-    private List<Contactos> list;
-    private Query query;
+    private Query queryMaster;
+
     private ListTableModel<Contactos> modelMaster;
     private ListTableModel<Correos> modelDetail;
+
+    private Contactos lastSelected;
+    private List<Correos> lastDetailData = Collections.emptyList();
 
     /**
      * Creates new form MasterDetail
@@ -49,8 +54,8 @@ public class MasterDetailForm extends javax.swing.JFrame implements ListSelectio
 
         // Init entities
         entityManager = Persistence.createEntityManagerFactory("io.gongarce.agenda").createEntityManager();
-        query = entityManager.createQuery("SELECT C FROM Contactos C");
-        list = query.getResultList();
+        queryMaster = entityManager.createQuery("SELECT C FROM Contactos C");
+        List<Contactos> list = queryMaster.getResultList();
         entityManager.getTransaction().begin();
 
         // Configure Master Table
@@ -89,7 +94,7 @@ public class MasterDetailForm extends javax.swing.JFrame implements ListSelectio
     private void onClickRefresh(java.awt.event.ActionEvent evt) {
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
-        List<Contactos> data = query.getResultList();
+        List<Contactos> data = queryMaster.getResultList();
         for (Object entity : data) {
             entityManager.refresh(entity);
         }
@@ -117,6 +122,7 @@ public class MasterDetailForm extends javax.swing.JFrame implements ListSelectio
     }
 
     private void onClickSave(java.awt.event.ActionEvent evt) {
+        List<Contactos> list = modelMaster.getData();
         try {
             entityManager.getTransaction().commit();
             entityManager.getTransaction().begin();
@@ -124,11 +130,10 @@ public class MasterDetailForm extends javax.swing.JFrame implements ListSelectio
             rex.printStackTrace();
             entityManager.getTransaction().begin();
             List<Contactos> merged = new ArrayList<Contactos>(list.size());
-            for (Contactos C : list) {
-                merged.add(entityManager.merge(C));
+            for (Contactos c : list) {
+                merged.add(entityManager.merge(c));
             }
-            list.clear();
-            list.addAll(merged);
+            modelMaster.setData(merged);
         }
     }
 

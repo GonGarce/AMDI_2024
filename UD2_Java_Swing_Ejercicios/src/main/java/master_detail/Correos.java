@@ -26,9 +26,10 @@ import jakarta.persistence.Transient;
 @Entity
 @Table(name = "correos", catalog = "AMDI_24", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "Correos.findAll", query = "SELECT c FROM Correos c")
-    , @NamedQuery(name = "Correos.findByCorreoId", query = "SELECT c FROM Correos c WHERE c.correoId = :correoId")
-    , @NamedQuery(name = "Correos.findByCorreo", query = "SELECT c FROM Correos c WHERE c.correo = :correo")})
+    @NamedQuery(name = "Correos.findAll", query = "SELECT c FROM Correos c"),
+    @NamedQuery(name = "Correos.findByContact", query = "SELECT c FROM Correos c WHERE c.contacto = :contacto"),
+    @NamedQuery(name = "Correos.findByCorreoId", query = "SELECT c FROM Correos c WHERE c.correoId = :correoId"),
+    @NamedQuery(name = "Correos.findByCorreo", query = "SELECT c FROM Correos c WHERE c.correo = :correo")})
 public class Correos implements Serializable {
 
     @Transient
@@ -44,7 +45,7 @@ public class Correos implements Serializable {
     private String correo;
     @JoinColumn(name = "ID_CONTACTO", referencedColumnName = "ID")
     @ManyToOne(optional = false)
-    private Contactos idContacto;
+    private Contactos contacto;
 
     public Correos() {
     }
@@ -79,12 +80,12 @@ public class Correos implements Serializable {
     }
 
     public Contactos getIdContacto() {
-        return idContacto;
+        return contacto;
     }
 
     public void setIdContacto(Contactos idContacto) {
-        Contactos oldIdContacto = this.idContacto;
-        this.idContacto = idContacto;
+        Contactos oldIdContacto = this.contacto;
+        this.contacto = idContacto;
         changeSupport.firePropertyChange("idContacto", oldIdContacto, idContacto);
     }
 
@@ -120,5 +121,5 @@ public class Correos implements Serializable {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         changeSupport.removePropertyChangeListener(listener);
     }
-    
+
 }

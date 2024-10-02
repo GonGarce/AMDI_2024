@@ -38,6 +38,10 @@ public class ListTableModel<T> extends AbstractTableModel {
         this.columns = columns;
     }
 
+    public List<T> getData() {
+        return data;
+    }
+
     public void setData(List<T> data) {
         this.data = data;
         this.fireTableDataChanged();
@@ -46,7 +50,7 @@ public class ListTableModel<T> extends AbstractTableModel {
     public T getRowValue(int rowIndex) {
         return this.data.get(rowIndex);
     }
-    
+
     public int add(T value) {
         this.data.add(value);
         int rowIndex = this.data.size() - 1;
