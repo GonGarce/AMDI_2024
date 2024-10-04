@@ -54,7 +54,7 @@ public class MasterDetailForm extends javax.swing.JFrame implements ListSelectio
 
         // Init entities
         entityManager = Persistence.createEntityManagerFactory("io.gongarce.agenda").createEntityManager();
-        queryMaster = entityManager.createQuery("SELECT C FROM Contactos C");
+        queryMaster = entityManager.createNamedQuery("Contactos.findAll");
         List<Contactos> list = queryMaster.getResultList();
         entityManager.getTransaction().begin();
 
@@ -96,31 +96,48 @@ public class MasterDetailForm extends javax.swing.JFrame implements ListSelectio
     }
 
     private void onClickDeleteDetail(java.awt.event.ActionEvent evt) {
-        // TODO: Delete Detail Row
+        int[] selected = tableDetail.getSelectedRows();
+        List<Correos> toRemove = new ArrayList<>(selected.length);
+        for (int i = 0; i < selected.length; i++) {
+            Correos c = modelDetail.getRowValue(tableDetail.convertRowIndexToModel(selected[i]));
+            toRemove.add(c);
+            entityManager.remove(c);
+        }
+        modelDetail.remove(toRemove);
     }
 
     private void onClickNewDetail(java.awt.event.ActionEvent evt) {
-        // TODO: Create Detail Row
+        if (Objects.isNull(lastSelected)) {
+            return;
+        }
+        Correos correo = new Correos(lastSelected);
+        entityManager.persist(correo);
+        int row = modelDetail.add(correo);
+        tableDetail.setRowSelectionInterval(row, row);
+        tableDetail.scrollRectToVisible(tableDetail.getCellRect(row, 0, true));
+        tableDetail.editCellAt(row, 1);
+        tableDetail.requestFocus();
     }
 
     @SuppressWarnings("unchecked")
     private void onClickRefresh(java.awt.event.ActionEvent evt) {
+        // Rollback changes
         entityManager.getTransaction().rollback();
         entityManager.getTransaction().begin();
+        // Reset data
         List<Contactos> data = queryMaster.getResultList();
-        for (Object entity : data) {
-            entityManager.refresh(entity);
-        }
         modelMaster.setData(data);
+        lastSelected = null;
+        lastDetailData = Collections.emptyList();
     }
 
     private void onClickeDeleteMaster(java.awt.event.ActionEvent evt) {
         int[] selected = tableMaster.getSelectedRows();
         List<Contactos> toRemove = new ArrayList<>(selected.length);
         for (int i = 0; i < selected.length; i++) {
-            Contactos C = modelMaster.getRowValue(tableMaster.convertRowIndexToModel(selected[i]));
-            toRemove.add(C);
-            entityManager.remove(C);
+            Contactos c = modelMaster.getRowValue(tableMaster.convertRowIndexToModel(selected[i]));
+            toRemove.add(c);
+            entityManager.remove(c);
         }
         modelMaster.remove(toRemove);
     }
@@ -132,6 +149,7 @@ public class MasterDetailForm extends javax.swing.JFrame implements ListSelectio
         tableMaster.setRowSelectionInterval(row, row);
         tableMaster.scrollRectToVisible(tableMaster.getCellRect(row, 0, true));
         tableMaster.editCellAt(row, 1);
+        tableMaster.requestFocus();
     }
 
     private void onClickSave(java.awt.event.ActionEvent evt) {
